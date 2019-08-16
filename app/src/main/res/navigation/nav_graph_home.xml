@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_home"
+    app:startDestination="@id/shoe_fragemnt">
+    <fragment
+        android:id="@+id/shoe_fragemnt"
+        android:name="com.thsai.jetpack.ui.fragment.ShoeFragment"
+        android:label="ShoeFragment"
+        tools:layout="@layout/fragment_shoe" />
+    <fragment
+        android:id="@+id/favorite_fragemnt"
+        android:name="com.thsai.jetpack.ui.fragment.FavoriteFragment"
+        android:label="FavoriteFragment"
+        tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/mine_fragemnt"
+        android:name="com.thsai.jetpack.ui.fragment.MineFragment"
+        android:label="MineFragment"
+        tools:layout="@layout/fragment_mine" />
+</navigation>
