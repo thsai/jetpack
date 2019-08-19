@@ -9,9 +9,9 @@ import com.thsai.jetpack.db.repository.UserRepository
 import kotlinx.coroutines.launch
 
 class RegisterModel constructor(private val userRepository: UserRepository) : ViewModel() {
-    val email = MutableLiveData<String>("")
-    val name = MutableLiveData<String>("")
-    val pwd = MutableLiveData<String>("")
+    val email = MutableLiveData("")
+    val name = MutableLiveData("")
+    val pwd = MutableLiveData("")
 
     fun register() {
         viewModelScope.launch {

@@ -25,8 +25,10 @@ class LoginFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding: FragmentLoginBinding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_login, container, false)
+        val binding: FragmentLoginBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_login, container, false
+        )
         onSubscribeUI(binding)
         return binding.root
     }
@@ -39,7 +41,7 @@ class LoginFragment : Fragment() {
             loginModel.login().observe(viewLifecycleOwner, Observer { user ->
                 user?.apply {
                     AppPrefsUtils.putLong(BaseConstant.SP_USER_ID, id)
-                    AppPrefsUtils.putString(BaseConstant.SP_USER_ID, acccount)
+                    AppPrefsUtils.putString(BaseConstant.SP_USER_NAME, acccount)
                     val intent = Intent(context, MainActivity::class.java)
                     requireContext().startActivity(intent)
                     Toast.makeText(context, "登陆成功", Toast.LENGTH_SHORT).show()

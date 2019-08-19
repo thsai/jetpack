@@ -11,10 +11,16 @@ import android.view.animation.DecelerateInterpolator
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.thsai.jetpack.common.listener.SimpleAnimation
 import com.thsai.jetpack.databinding.FragmentShoeBinding
+import com.thsai.jetpack.ui.adapter.ShoeAdapter
 import com.thsai.jetpack.utils.UiUtils
+import com.thsai.jetpack.viewmodel.CustomViewModelProvider
+import com.thsai.jetpack.viewmodel.ShoeModel
+import kotlinx.android.synthetic.main.fragment_shoe.*
 
 class ShoeFragment : Fragment() {
 
@@ -24,19 +30,28 @@ class ShoeFragment : Fragment() {
 
     private var size: Int = 0
 
-    private lateinit var fab_shoe: FloatingActionButton
-    private lateinit var fab_nike: FloatingActionButton
-    private lateinit var fab_adidas: FloatingActionButton
-    private lateinit var fab_other: FloatingActionButton
+//    private lateinit var fab_shoe: FloatingActionButton
+//    private lateinit var fab_nike: FloatingActionButton
+//    private lateinit var fab_adidas: FloatingActionButton
+//    private lateinit var fab_other: FloatingActionButton
+//
+//    private lateinit var gp_nike: Group
+//    private lateinit var gp_adi: Group
+//    private lateinit var gp_other: Group
 
-    private lateinit var gp_nike: Group
-    private lateinit var gp_adi: Group
-    private lateinit var gp_other: Group
+    private val viewModel: ShoeModel by viewModels {
+        CustomViewModelProvider.providerShoeModel(requireContext())
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentShoeBinding.inflate(inflater, container, false)
-        onSubscribeUI(binding)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        onSubscribeUI()
+        initRecycleView()
     }
 
     override fun onResume() {
@@ -47,21 +62,46 @@ class ShoeFragment : Fragment() {
         radius = UiUtils.dp2px(requireContext(), 80f)
     }
 
-    private fun onSubscribeUI(binding: FragmentShoeBinding) {
-        fab_shoe = binding.fabShoe
-        fab_nike = binding.fabNike
-        fab_adidas = binding.fabAdidas
-        fab_other = binding.fabOther
+    private fun initRecycleView() {
+        val shoeAdapter = ShoeAdapter(requireContext())
+        recycler.adapter = shoeAdapter
+        viewModel.shoes.observe(viewLifecycleOwner, Observer {
+            shoeAdapter.submitList(it)
+        })
+    }
 
-        gp_nike = binding.gpNike
-        gp_adi = binding.gpAdi
-        gp_other = binding.gpOther
+    private fun onSubscribeUI() {
+//        fab_shoe = binding.fabShoe
+//        fab_nike = binding.fabNike
+//        fab_adidas = binding.fabAdidas
+//        fab_other = binding.fabOther
+//
+//        gp_nike = binding.gpNike
+//        gp_adi = binding.gpAdi
+//        gp_other = binding.gpOther
 
         fab_shoe.setOnClickListener {
             shoeAnimation()
         }
 
+        fab_nike.setOnClickListener {
+            shoeAnimation()
+            viewModel.setBrand(ShoeModel.NIKE)
+        }
+
+        fab_adidas.setOnClickListener {
+            shoeAnimation()
+            viewModel.setBrand(ShoeModel.ADIDAS)
+        }
+
+        fab_other.setOnClickListener {
+            shoeAnimation()
+            viewModel.setBrand(ShoeModel.OTHER)
+        }
+
         setViewVisible(false)
+
+
     }
 
     private fun shoeAnimation() {

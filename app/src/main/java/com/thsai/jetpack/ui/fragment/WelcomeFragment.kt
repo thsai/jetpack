@@ -20,7 +20,7 @@ class WelcomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btn_login.setOnClickListener {
-            val name = AppPrefsUtils.getString(BaseConstant.USER_NAME)
+            val name = AppPrefsUtils.getString(BaseConstant.SP_USER_NAME)
             val bundle = Bundle()
             bundle.putString(BaseConstant.ARGS_NAME, name)
             findNavController().navigate(R.id.welcom_to_login, bundle)
